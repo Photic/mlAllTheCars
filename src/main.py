@@ -2,13 +2,15 @@ import R_functions as rf
 import pandas as pd
 import numpy as np
 import statistics as st
+import matplotlib.pyplot as plt
+from matplotlib.patches import Polygon
+import scipy.stats
 
 
 mydata = pd.read_csv('./car.csv', header = None)
 numpyArray = mydata
 
 print(st.mode(numpyArray[6]))
-
 
 index = 0
 
@@ -117,10 +119,42 @@ for x in range(7):
       #  (numpyArray[x][y]) = (numpyArray[x][y])/var
 
 
-
-import matplotlib.pyplot as plt
 plt.style.use('ggplot')
 plt.scatter(numpyArray[5], numpyArray[6])
 plt.show() # Depending on whether you use IPython or interactive mode, etc.
 
 print(numpyArray)
+
+columnTwo = numpyArray[2]
+
+print("MEAN !!", rf.mean(columnTwo))
+
+x_min = min(columnTwo)
+x_max = max(columnTwo)
+
+mean = rf.mean(columnTwo)
+std = rf.sd(columnTwo)
+
+x = np.linspace(x_min, x_max, 100)
+y = scipy.stats.norm.pdf(x,mean,std)
+
+plt.hist(numpyArray[6])
+plt.plot(x,y, color='coral')
+
+plt.grid()
+
+plt.xlim(x_min,x_max)
+
+plt.xlabel('x')
+plt.ylabel('Normal Distribution of Doors')
+
+plt.savefig("normal_distribution.png")
+plt.show()
+
+
+data = numpyArray[5]
+print("MEAN 6", rf.mean(data))
+plt.set_title = "Hello"
+plt.boxplot(data)
+plt.xticks([1], ["Doors Formatted"])
+plt.show()

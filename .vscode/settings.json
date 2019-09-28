@@ -1,6 +1,6 @@
 {
     "python.jediEnabled": true,
-    "python.pythonPath": "C:\\Users\\Jonat\\.virtualenvs\\mlAllTheCars-d8g41sol\\Scripts\\python.exe",
+    "python.pythonPath": "/Users/steen/.local/share/virtualenvs/mlAllTheCars-fEo4OAsh/bin/python",
     "python.linting.pylintEnabled": true,
     "python.linting.enabled": true
 }
