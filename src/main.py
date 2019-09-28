@@ -6,23 +6,13 @@ import statistics as st
 import matplotlib.pyplot as plt
 from matplotlib.patches import Polygon
 import scipy.stats
-
-
-mydata = pd.read_csv('./car.csv', header = None)
-numpyArray = mydata
-
-print(st.mode(numpyArray[6]))
-
-index = 0
 import seaborn as sns
-
 
 # First we start off by importing our data set using pandas.
 
 df = pd.read_csv('./car.csv', header = None)
 
 # On the website it said there were no missing values, but we just check for good measure.
-
 print("\nCalling mydata.info() to see if there are any missing values in the data set.")
 df.info()
 
@@ -112,11 +102,6 @@ for i in df.columns[:-1]:
     sns.countplot(df[i],hue=df['class'])
     plt.savefig('ClassVs%s'%i)
 
-
-
-
-
-
 for x in range(7):
     mean = np.mean(numpyArray[x])
     var = rf.var(numpyArray[x])
@@ -125,7 +110,6 @@ for x in range(7):
     #for y in range(1728):
      #   (numpyArray[x][y]) = (numpyArray[x][y]) - mean
       #  (numpyArray[x][y]) = (numpyArray[x][y])/var
-
 
 plt.style.use('ggplot')
 plt.scatter(numpyArray[5], numpyArray[6])
