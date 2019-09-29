@@ -5,8 +5,10 @@ import matplotlib.pyplot as plt
 import statistics as st
 import matplotlib.pyplot as plt
 from matplotlib.patches import Polygon
+from matplotlib.pyplot import figure, plot, title, legend, xlabel, ylabel, show
 import scipy.stats
 import seaborn as sns
+from scipy.linalg import svd
 
 # First we start off by importing our data set using pandas.
 
@@ -67,7 +69,7 @@ classDict = dict(zip(classNames,range(len(classNames))))
 y = np.array([classDict[cl] for cl in classLabels])
 print(y)
 N, M = X.shape
-C = 4
+C = 4 # because there are 4 different class labels.
 print(X)
 
 # Doing some summary statistics like mean, variance, standard deviation, median, quantiles etc.
@@ -102,8 +104,63 @@ for i in df.columns[:-1]:
     sns.countplot(df[i],hue=df['class'])
     plt.savefig('ClassVs%s'%i)
 
+
+# Subtract mean value from data (ex. 2.1.3)
+Y = X - np.ones((N,1))*X.mean(axis=0)
+
+# PCA by computing SVD of Y
+U,S,V = svd(Y,full_matrices=False)
+
+# Compute variance explained by principal components
+rho = (S*S) / (S*S).sum() 
+
+threshold = 0.9
+
+# Plot variance explained
+plt.figure()
+plt.plot(range(1,len(rho)+1),rho,'x-')
+plt.plot(range(1,len(rho)+1),np.cumsum(rho),'o-')
+plt.plot([1,len(rho)],[threshold, threshold],'k--')
+plt.title('Variance explained by principal components');
+plt.xlabel('Principal component');
+plt.ylabel('Variance explained');
+plt.legend(['Individual','Cumulative','Threshold'])
+plt.grid()
+plt.show()
+
+# PCA by computing SVD of Y
+U,S,Vh = svd(Y,full_matrices=False)
+
+# of the vector V. So, for us to obtain the correct V, we transpose:
+V = Vh.T    
+
+# Project the centered data onto principal component space
+Z = Y @ V
+
+# Indices of the principal components to be plotted (kan ændres)
+i =0
+j =1
+
+# Plot PCA of the data
+f = figure()
+title('Car Evaluation data: PCA')
+#Z = array(Z)
+for c in range(C):
+    # select indices belonging to class c:
+    class_mask = y==c
+    plot(Z[class_mask,i], Z[class_mask,j], 'o', alpha=.5)
+legend(classNames)
+xlabel('PC{0}'.format(i+1))
+ylabel('PC{0}'.format(j+1))
+
+# Output result to screen
+show()
+
+
+
+# Vi udskriver allerede mean, var og alt det andet længere oppe ved 75 - 86.
 for x in range(7):
-    mean = np.mean(numpyArray[x])
+    mean = np.mean(numpyArray[x], axis=0)
     var = rf.var(numpyArray[x])
     print("mean", mean)
     print("var", var)
