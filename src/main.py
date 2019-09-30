@@ -128,6 +128,7 @@ plt.xlabel('Principal component');
 plt.ylabel('Variance explained');
 plt.legend(['Individual','Cumulative','Threshold'])
 plt.grid()
+plt.savefig('VarianceExplainedByPCA')
 plt.show()
 
 # PCA by computing SVD of Y
