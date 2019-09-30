@@ -15,7 +15,7 @@ lug_label = {"small" : 0, "med" : 1, "big" : 2}
 safety_label = {"low" : 0, "med" : 1, "high" : 2}
 doors_label = {"2" : 0, "3" : 1, "4" : 2, "5more" : 3}
 persons_label = {"2" : 0, "4" : 1, "more" : 2}
-#class_label = {"unacc" : 0, "acc" : 1, "good" : 2, "vgood" : 3}
+class_label = {"unacc" : 0, "acc" : 1, "good" : 2, "vgood" : 3}
 
 df.price = [price_label[item] for item in df.price]
 df.maint = [price_label[item] for item in df.maint]
@@ -23,17 +23,11 @@ df.lug_boot = [lug_label[item] for item in df.lug_boot]
 df.safety = [safety_label[item] for item in df.safety]
 df.doors = [doors_label[item] for item in df.doors]
 df.persons = [persons_label[item] for item in df.persons]
-#df['class'] = [class_label[item] for item in df['class']]
+df['class'] = [class_label[item] for item in df['class']]
 
-# Make a list of wanted features.
-features = ['price', 'maint', 'doors', 'persons', 'lug_boot', 'safety'] 
-x = df.loc[:, features].values
+df = StandardScaler().fit_transform(df)
 
-y = df.loc[:,['class']].values
+pca = PCA(n_components=7)
+principalComponents = pca.fit_transform(df)
 
-x = StandardScaler().fit_transform(x)
-
-pca = PCA(n_components=6)
-principalComponents = pca.fit_transform(x)
-
-print(pca.explained_variance_ratio_)
+print("PCA Ratio " + str(pca.explained_variance_ratio_))
