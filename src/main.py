@@ -3,7 +3,6 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import statistics as st
-import matplotlib.pyplot as plt
 from matplotlib.patches import Polygon
 from matplotlib.pyplot import figure, plot, title, legend, xlabel, ylabel, show
 import scipy.stats
@@ -129,6 +128,7 @@ plt.xlabel('Principal component');
 plt.ylabel('Variance explained');
 plt.legend(['Individual','Cumulative','Threshold'])
 plt.grid()
+plt.savefig('VarianceExplainedByPCA')
 plt.show()
 
 # PCA by computing SVD of Y
@@ -140,24 +140,27 @@ V = Vh.T
 # Project the centered data onto principal component space
 Z = Y @ V
 
-# Indices of the principal components to be plotted (kan ændres)
-i =0
-j =1
+# Indices of the principal components to be plotted We plot each attribute up against the other
+j =6
 
 # Plot PCA of the data
-f = figure()
-title('Car Evaluation data: PCA')
-#Z = array(Z)
-for c in range(C):
-    # select indices belonging to class c:
-    class_mask = y==c
-    plot(Z[class_mask,i], Z[class_mask,j], 'o', alpha=.5)
-legend(classNames)
-xlabel('PC{0}'.format(i+1))
-ylabel('PC{0}'.format(j+1))
 
-# Output result to screen
+for i in range(7):
+    f = figure()
+    title('PCA Car Evaluation vs %s'%attributeNames[i])
+    #Z = array(Z)
+    for c in range(C):
+    # select indices belonging to class c:
+        class_mask = y==c
+        plot(Z[class_mask,i], Z[class_mask,j], 'o', alpha=.5)
+        legend(classNames)
+        xlabel('PC{0}'.format(j+1))
+        ylabel('PC{0}'.format(i+1))
+    plt.savefig('PCA Car Evaluation vs %s'%attributeNames[i])
+    # Output result to screen
 show()
+
+
 
 
 
