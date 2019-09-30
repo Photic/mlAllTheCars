@@ -97,6 +97,9 @@ plt.show()
 plt.hist(df['class'])
 plt.show()
 
+# Below code snippet comes from GitHub, we had trouble visualizing the data so we wanted to see how others had,
+# created meaningful plots to show the distribution of attributes amongst classifications.
+# https://github.com/sonarsushant/Car-Evaluation-Dataset-Classification/blob/master/Car%20Evaluation%20Dataset.ipynb
 
 for i in df.columns[:-1]:
     plt.figure(figsize=(12,6))
